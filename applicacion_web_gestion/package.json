@@ -1,14 +1,13 @@
 {
-  "name": "intro_web_1",
+  "name": "aplicacion_web_gestion",
+  "version":"1.0.0",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "version": "1.0.0",
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "~4.9.1",
+    "body-parser": "~1.9.3",
+    "express-myconnection": "*",
+    "mysql": "*",
+    "jsonwebtoken": "^1.2.0",
+    "connect-multiparty": "~1.2.5"
   }
 }
