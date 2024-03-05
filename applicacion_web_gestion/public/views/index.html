@@ -20,11 +20,72 @@
   <script src="js/Core/ui-bootstrap-tpls-0.14.3.min.js"></script>
 
   <script src="js/Dev/app.js"></script>
+  <script src="js/Dev/Services/management.js"></script>
     
 </head>
  
 <!-- declare our angular application and angular controller -->
 <body ng-app="LabApp" ng-controller="mainController">
+  <h1>Gestión de Usuarios</h1>
+  <form name="outerForm" class="tab-form-demo">
+    <uib-tabset active="activeForm">
+       <uib-tab index="0" heading="Pacientes">
+        <table class="table table-bordered">
+          <tr ng-repeat="patient in patients">
+            <td>
+              {{patient.NOMBRE}}
+              </td>
+              <td>
+              {{patient.FECHA_NAC}}
+              </td>
+              <td>
+              {{patient.DIRECCION}}
+              </td>
+              <td>
+              {{patient.TELEFONO}}
+              </td>
+  
+          </tr>
+          
+        </table>     
+
+       </uib-tab>
+       <uib-tab index="1" heading="Médicos">
+
+        <table class="table table-bordered">
+          <tr ng-repeat="medicos in doctors">
+            <td>
+              {{medicos.MED_NOMBRE}}
+              </td>
+              <td>
+              {{medicos.SERVICIO}}
+              </td>
+              
+            
+          </tr>
+        </table>     
+
+       </uib-tab>
+       <uib-tab index="2" heading="Visitas">
+
+        <table class="table table-bordered">
+          <tr ng-repeat="visitas in visits">
+            <td>
+              {{visitas.VISITA_ID}}
+              </td>
+              
+              <td>
+              {{visitas.FECHA_VIS}}
+              </td>
+              <td>
+              {{visitas.DIAGNOSTICO}}
+              </td>
+              
+          </tr>
+        </table>    
+       </uib-tab>
+    </uib-tabset>
+  </form>
 
  
 </body>
