@@ -26,10 +26,55 @@
  
 <!-- declare our angular application and angular controller -->
 <body ng-app="LabApp" ng-controller="mainController">
-  <h1>Gestión de Usuarios</h1>
+  <h1>Gestión de Usuarios</h1>  
   <form name="outerForm" class="tab-form-demo">
+
     <uib-tabset active="activeForm">
+
        <uib-tab index="0" heading="Pacientes">
+        <div ng-show="newPatient==0" ng-click="addNewPatient();"href="#">
+          <a class="btn btn-success" href="#" >
+          <i class="fa fa-plus">
+            </i>add patient
+          </a> 
+          {{newPatient}}
+        </div>
+        
+        <div ng-show="newPatient==1" >
+          
+        <form name="miFormulario" novalidate >
+          <table>
+            <tr>
+              <td>
+                <div  class="form-group">
+                  Nombre:<input type="text" name="Name" ng-model="PatientData.patientName" class="form-control" placeholder="Nombre" required />
+                </div>
+              </td>
+              <td>
+                <div  class="form-group">
+                  Dirección:<input type="text" name="Address" ng-model="PatientData.patientAddress" class="form-control" required />
+                </div>
+              </td>
+              <td>
+                <div  class="form-group">
+                  Teléfono:<input type="number" name="Phone" ng-model="PatientData.patientPhone" class="form-control" required />
+                </div>
+              </td>
+              <td>
+                <div  class="form-group">
+                  Fecha de Nacimiento:<input type="date" ng-model="PatientData.patientBirthdate" name="" class="form-control" required />
+                </div>
+              </td>
+            </tr>      
+          </table> 
+          <a class="btn btn-success" ng-click="createNewPatient();" href="#">
+            <i class="fa fa-check-circle fa-lg"></i> Crear</a>
+          <a class="btn btn-danger" ng-click="cancelNewPatient();" href="#">
+             <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
+
+        </div>
+        </form>
+        
         <table class="table table-bordered">
           <tr ng-repeat="patient in patients">
             <td>
@@ -47,10 +92,46 @@
   
           </tr>
           
-        </table>     
+        </table>
+        
+        
+        
+   
 
        </uib-tab>
+       
        <uib-tab index="1" heading="Médicos">
+        <div ng-show="newDoctor==0" ng-click="addNewDoctor();"href="#">
+          <a class="btn btn-success" href="#" >
+          <i class="fa fa-plus">
+            </i>
+            add doctor
+          </a>
+        </div>
+        <div ng-show="newDoctor==1" >
+          <form name="doctorForm" novalidate></form>
+            <table>
+              <tr>
+                <td>
+                  <div class="form-group">
+                    Nombre:<input type="text" name="doctorName" ng-model="DoctorData.doctorName" class="form-control" placeholder="Nombre" required />
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    Servicio:<input type="text" name="servicio" ng-model="DoctorData.doctorSpecialty"class="form-control" placeholder="Servicio" required />
+                  </div>
+                </td>
+              </tr>
+            </table>
+          
+          <a class="btn btn-success" ng-click="createNewDoctor();" href="#">
+            <i class="fa fa-check-circle fa-lg"></i> Crear</a>
+          <a class="btn btn-danger" ng-click="cancelNewDoctor();" href="#">
+             <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
+
+        </div>
+      </form>
 
         <table class="table table-bordered">
           <tr ng-repeat="medicos in doctors">
@@ -67,6 +148,51 @@
 
        </uib-tab>
        <uib-tab index="2" heading="Visitas">
+        <div ng-show="newVisit==0" ng-click="displayer_Visits();"href="#">
+          <a class="btn btn-success" href="#" >
+          <i class="fa fa-plus">
+            </i>
+            Register a visit
+          </a>
+        </div>
+        <div ng-show="newVisit==1" >
+            <form name="miFormulario" novalidate >
+               <table>
+                 <tr>
+                   <td>
+                     <div  class="form-group">
+                      Paciente:<select name="Name" ng-model="VisitData.patientName" class="form-control" ng-options="opt.name for opt in patientList.Patients" required />
+                      </div>
+                   </td>
+                   <td>
+                     <div  class="form-group">
+                      Medico:<select type="text" name="Doctor" ng-model="VisitData.doctorName" class="form-control" ng-options="opt.name for opt in doctorList.Doctors" required />
+                     </div>
+                   </td>
+                    <td>
+                      
+                   <div  class="form-group">
+                    Fecha de la visita:<input type="date" ng-model="VisitData.visitDate" name="" class="form-control" required />
+                  </div>
+                  </td>
+                   <td>
+                      <div  class="form-group">
+                        Diagnóstico:<input type="text" name="Diagnostico" ng-model="VisitData.diagnosis" class="form-control" required />
+                      </div>
+                      </td>
+                  </tr>
+                  
+                </table>
+                  
+                <a class="btn btn-success" ng-click="createNewVisit();" href="#">
+                  <i class="fa fa-check-circle fa-lg"></i> Crear</a>
+                <a class="btn btn-danger" ng-click="cancelNewVisit();" href="#">
+                   <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
+      
+            </form>
+
+        </div>
+
 
         <table class="table table-bordered">
           <tr ng-repeat="visitas in visits">

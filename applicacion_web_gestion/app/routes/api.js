@@ -24,6 +24,35 @@ module.exports = function (app, express) {
       );
     });
   });
+  apiRouter.route("/patients").post(function (req, res) {
+    req.getConnection(function (err, conn) {
+      if (err) return next("Cannot Connect");
+
+      // Guardamos los datos del nuevo paciente
+      var query = conn.query(
+        "INSERT INTO tbpacientes set ?",
+        req.body,
+        function (err, newPatient) {
+          if (err) {
+            console.log(err);
+            return next("Mysql error, check your query");
+          }
+
+          var query = conn.query(
+            "SELECT * FROM tbpacientes",
+            function (err, patients) {
+              if (err) {
+                console.log(err);
+                return next("Mysql error, check your query");
+              }
+
+              res.json(patients);
+            }
+          );
+        }
+      );
+    });
+  });
 
   // Route for /doctors
   apiRouter.route("/doctors").get(function (req, res, next) {
@@ -43,6 +72,35 @@ module.exports = function (app, express) {
       );
     });
   });
+  apiRouter.route("/doctors").post(function (req, res) {
+    req.getConnection(function (err, conn) {
+      if (err) return next("Cannot Connect");
+
+      // Guardamos los datos del nuevo doctor
+      var query = conn.query(
+        "INSERT INTO tbmedicos set ?",
+        req.body,
+        function (err, newDoctor) {
+          if (err) {
+            console.log(err);
+            return next("Mysql error, check your query");
+          }
+
+          var query = conn.query(
+            "SELECT * FROM tbmedicos",
+            function (err, doctors) {
+              if (err) {
+                console.log(err);
+                return next("Mysql error, check your query");
+              }
+
+              res.json(doctors);
+            }
+          );
+        }
+      );
+    });
+  });
   //route for /visits
   apiRouter.route("/visits").get(function (req, res, next) {
     req.getConnection(function (err, conn) {
@@ -56,6 +114,35 @@ module.exports = function (app, express) {
         }
         res.json(visits);
       });
+    });
+  });
+  apiRouter.route("/visits").post(function (req, res) {
+    req.getConnection(function (err, conn) {
+      if (err) return next("Cannot Connect");
+
+      // Guardamos los datos de la nueva visita
+      var query = conn.query(
+        "INSERT INTO tbvisitas set ?",
+        req.body,
+        function (err, newVisit) {
+          if (err) {
+            console.log(err);
+            return next("Mysql error, check your query");
+          }
+
+          var query = conn.query(
+            "SELECT * FROM tbvisitas",
+            function (err, visits) {
+              if (err) {
+                console.log(err);
+                return next("Mysql error, check your query");
+              }
+
+              res.json(visits);
+            }
+          );
+        }
+      );
     });
   });
 
