@@ -85,6 +85,35 @@ module.exports = function (app, express) {
           }
         );
       });
+    })
+    .put(function (req, res) {
+      var patientId = req.params.patientId;
+
+      req.getConnection(function (err, conn) {
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query(
+          "UPDATE tbpacientes set ? WHERE PAC_ID = ? ",
+          [req.body, patientId],
+          function (err, rows) {
+            if (err) {
+              console.log(err);
+              return next("Mysql error, check your query");
+            }
+
+            var query = conn.query(
+              "SELECT * FROM tbpacientes",
+              function (err, patientsList) {
+                if (err) {
+                  console.log(err);
+                  return next("Mysql error, check your query");
+                }
+                res.json(patientsList);
+              }
+            );
+          }
+        );
+      });
     });
 
   // Route for /doctors
@@ -166,6 +195,35 @@ module.exports = function (app, express) {
           }
         );
       });
+    })
+    .put(function (req, res) {
+      var doctorId = req.params.doctorId;
+
+      req.getConnection(function (err, conn) {
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query(
+          "UPDATE tbmedicos set ? WHERE MED_ID = ? ",
+          [req.body, doctorId],
+          function (err, rows) {
+            if (err) {
+              console.log(err);
+              return next("Mysql error, check your query");
+            }
+
+            var query = conn.query(
+              "SELECT * FROM tbmedicos",
+              function (err, doctorsList) {
+                if (err) {
+                  console.log(err);
+                  return next("Mysql error, check your query");
+                }
+                res.json(doctorsList);
+              }
+            );
+          }
+        );
+      });
     });
   //route for /visits
   apiRouter.route("/visits").get(function (req, res, next) {
@@ -237,6 +295,35 @@ module.exports = function (app, express) {
                   return next("Mysql error, check your query");
                 }
 
+                res.json(visitList);
+              }
+            );
+          }
+        );
+      });
+    })
+    .put(function (req, res) {
+      var visitId = req.params.visitId;
+
+      req.getConnection(function (err, conn) {
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query(
+          "UPDATE tbvisitas set ? WHERE VISITA_ID = ? ",
+          [req.body, visitId],
+          function (err, rows) {
+            if (err) {
+              console.log(err);
+              return next("Mysql error, check your query");
+            }
+
+            var query = conn.query(
+              "SELECT * FROM tbvisitas",
+              function (err, visitList) {
+                if (err) {
+                  console.log(err);
+                  return next("Mysql error, check your query");
+                }
                 res.json(visitList);
               }
             );
