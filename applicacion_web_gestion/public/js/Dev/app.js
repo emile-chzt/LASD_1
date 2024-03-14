@@ -187,6 +187,10 @@ MyApp.controller("mainController", function ($scope, Management) {
     };
   };
 
+  
+  
+  
+
   Management.allPatients().success(function (data) {
     //alert(JSON.stringify(data));
     $scope.patients = data;
@@ -199,4 +203,11 @@ MyApp.controller("mainController", function ($scope, Management) {
     //alert(JSON.stringify(data));
     $scope.visits = data;
   });
+
+  $scope.deletePatient=function(id){
+
+    Management.deletePat(id).success(function(data) {
+          $scope.patients=data;
+        });
+  };
 });

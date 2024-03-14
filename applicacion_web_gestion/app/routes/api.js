@@ -144,7 +144,39 @@ module.exports = function (app, express) {
         }
       );
     });
-  });
+  })
+
+  // on routes that end in /patients
+  // ----------------------------------------------------
+  apiRouter.route('/patients/:patientId').delete(function(req, res) {
+
+    var patientId = req.params.patientId;
+    req.getConnection(function(err,conn){
+
+        if (err) return next("Cannot Connect");
+
+            var query = conn.query("DELETE FROM tbpacientes  WHERE PAC_ID = ? ",patientId,function(err,patientDeleted){
+
+                if(err){
+                    console.log(err);
+                    return next("Mysql error, check your query");
+                  }
+
+                  var query = conn.query("SELECT * FROM tbpacientes",function(err,patientList){
+  
+                  if(err){
+                      console.log(err);
+                      return next("Mysql error, check your query");
+                  }
+                  
+                  res.json(patientList);
+                });
+  
+               });
+  
+      });
+   });
+  
 
   return apiRouter;
 };
