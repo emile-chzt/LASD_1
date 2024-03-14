@@ -53,6 +53,39 @@ module.exports = function (app, express) {
       );
     });
   });
+  apiRouter
+    .route("/patients/:patientId")
+
+    .delete(function (req, res) {
+      var patientId = req.params.patientId;
+
+      req.getConnection(function (err, conn) {
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query(
+          "DELETE FROM tbpacientes  WHERE PAC_ID = ? ",
+          patientId,
+          function (err, patientDeleted) {
+            if (err) {
+              console.log(err);
+              return next("Mysql error, check your query");
+            }
+
+            var query = conn.query(
+              "SELECT * FROM tbpacientes",
+              function (err, patientList) {
+                if (err) {
+                  console.log(err);
+                  return next("Mysql error, check your query");
+                }
+
+                res.json(patientList);
+              }
+            );
+          }
+        );
+      });
+    });
 
   // Route for /doctors
   apiRouter.route("/doctors").get(function (req, res, next) {
@@ -101,6 +134,39 @@ module.exports = function (app, express) {
       );
     });
   });
+  apiRouter
+    .route("/doctors/:doctorId")
+
+    .delete(function (req, res) {
+      var doctorId = req.params.doctorId;
+
+      req.getConnection(function (err, conn) {
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query(
+          "DELETE FROM tbmedicos  WHERE MED_ID = ? ",
+          doctorId,
+          function (err, doctorDeleted) {
+            if (err) {
+              console.log(err);
+              return next("Mysql error, check your query");
+            }
+
+            var query = conn.query(
+              "SELECT * FROM tbmedicos",
+              function (err, doctorList) {
+                if (err) {
+                  console.log(err);
+                  return next("Mysql error, check your query");
+                }
+
+                res.json(doctorList);
+              }
+            );
+          }
+        );
+      });
+    });
   //route for /visits
   apiRouter.route("/visits").get(function (req, res, next) {
     req.getConnection(function (err, conn) {
@@ -144,39 +210,40 @@ module.exports = function (app, express) {
         }
       );
     });
-  })
+  });
+  apiRouter
+    .route("/visits/:visitId")
 
-  // on routes that end in /patients
-  // ----------------------------------------------------
-  apiRouter.route('/patients/:patientId').delete(function(req, res) {
+    .delete(function (req, res) {
+      var visitId = req.params.visitId;
 
-    var patientId = req.params.patientId;
-    req.getConnection(function(err,conn){
-
+      req.getConnection(function (err, conn) {
         if (err) return next("Cannot Connect");
 
-            var query = conn.query("DELETE FROM tbpacientes  WHERE PAC_ID = ? ",patientId,function(err,patientDeleted){
+        var query = conn.query(
+          "DELETE FROM tbvisitas  WHERE VISITA_ID = ? ",
+          visitId,
+          function (err, visitDeleted) {
+            if (err) {
+              console.log(err);
+              return next("Mysql error, check your query");
+            }
 
-                if(err){
-                    console.log(err);
-                    return next("Mysql error, check your query");
-                  }
+            var query = conn.query(
+              "SELECT * FROM tbvisitas",
+              function (err, visitList) {
+                if (err) {
+                  console.log(err);
+                  return next("Mysql error, check your query");
+                }
 
-                  var query = conn.query("SELECT * FROM tbpacientes",function(err,patientList){
-  
-                  if(err){
-                      console.log(err);
-                      return next("Mysql error, check your query");
-                  }
-                  
-                  res.json(patientList);
-                });
-  
-               });
-  
+                res.json(visitList);
+              }
+            );
+          }
+        );
       });
-   });
-  
+    });
 
   return apiRouter;
 };

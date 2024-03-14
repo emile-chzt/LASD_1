@@ -30,22 +30,15 @@ angular
     managementFactory.addVisit = function (VisitData) {
       return $http.post("/api/visits/", VisitData);
     };
-
-    //delete a patient
-	managementFactory.deletePat = function(id) {
-
-		return $http.delete('/api/patients/' + id);
-	  };
-
-    //delete a doctor
-	managementFactory.deleteDoc = function(id) {
-
-		return $http.delete('/api/doctors/' + id);
-	};
-
-    
-
-  // return our entire userFactory object
-  return managementFactory;
-
+    managementFactory.deletePat = function (id) {
+      return $http.delete("/api/patients/" + id);
+    };
+    managementFactory.deleteDoc = function (id) {
+      return $http.delete("/api/doctors/" + id);
+    };
+    managementFactory.deleteVisit = function (id) {
+      return $http.delete("/api/visits/" + id);
+    };
+    // return our entire userFactory object
+    return managementFactory;
   });

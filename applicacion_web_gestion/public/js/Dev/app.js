@@ -163,6 +163,12 @@ MyApp.controller("mainController", function ($scope, Management) {
       patientPhone: "",
     };
   };
+  $scope.deletePatient = function (id) {
+    Management.deletePat(id).success(function (data) {
+      $scope.patients = data;
+    });
+  };
+
   $scope.cancelNewDoctor = function () {
     $scope.newDoctor = 0;
     $scope.DoctorData = {
@@ -170,6 +176,12 @@ MyApp.controller("mainController", function ($scope, Management) {
       doctorSpecialty: "",
     };
   };
+  $scope.deleteDoctor = function (id) {
+    Management.deleteDoc(id).success(function (data) {
+      $scope.doctors = data;
+    });
+  };
+
   $scope.cancelNewVisit = function () {
     $scope.newVisit = 0;
     $scope.VisitData = {
@@ -185,6 +197,11 @@ MyApp.controller("mainController", function ($scope, Management) {
     $scope.doctorList = {
       Doctors: [],
     };
+  };
+  $scope.deleteVisit = function (id) {
+    Management.deleteVisit(id).success(function (data) {
+      $scope.visits = data;
+    });
   };
 
   
