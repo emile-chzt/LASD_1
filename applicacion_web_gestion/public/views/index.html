@@ -67,15 +67,16 @@
               </td>
             </tr>      
           </table> 
-          <a class="btn btn-success" ng-click="createNewPatient();"ng-show="editing==0" href="#">
+          <a class="btn btn-success" ng-click="createNewPatient();" ng-show="editing==0" href="#">
             <i class="fa fa-check-circle fa-lg"></i> Crear</a>
-            <a class="btn btn-success"  ng-click="editPatient();" ng-show="editing==1" href="#">
-              <i class="fa fa-check-circle fa-lg"></i> Editar</a> 
+          <a class="btn btn-success"  ng-click="editPatient();" ng-show="editing==1" href="#">
+              <i class="fa fa-check-circle fa-lg"></i> Editar</a>
+ 
           <a class="btn btn-danger" ng-click="cancelNewPatient();" href="#">
              <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
 
         </div>
-        </form>
+    </form>
         
         <table class="table table-bordered">
           <tr ng-repeat="patient in patients">
@@ -100,14 +101,14 @@
                   </i>
                   <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                </span>
-              </td>     
-              <td>
+               <td>
                 <span class="fa-stack fa-lg" ng-click="selectedPatient(patient);">
                  <i class="fa fa-circle fa-stack-2x text-success"></i>
                  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                 </span>
               </td>
-             
+
+              </td>                  
 
   
           </tr>
@@ -147,9 +148,8 @@
           
           <a class="btn btn-success" ng-click="createNewDoctor();" ng-show="editing==0" href="#">
             <i class="fa fa-check-circle fa-lg"></i> Crear</a>
-            <a class="btn btn-success"  ng-click="editDoctor();" ng-show="editing==1" href="#">
+          <a class="btn btn-success" ng-click="editDoctor();" ng-show="editing==1" href="#">
               <i class="fa fa-check-circle fa-lg"></i> Editar</a>
- 
           <a class="btn btn-danger" ng-click="cancelNewDoctor();" href="#">
              <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
 
@@ -173,13 +173,13 @@
                   </i>
                   <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                </span>
-               <td>
-                <span class="fa-stack fa-lg" ng-click="selectedDoctor(medicos);">
-                 <i class="fa fa-circle fa-stack-2x text-success"></i>
-                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                </span>
-              </td>
-
+               </td>
+                <td>
+                  <span class="fa-stack fa-lg" ng-click="selectedDoctor(medicos);">
+                  <i class="fa fa-circle fa-stack-2x text-success"></i>
+                  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                  </span>
+                </td>
               
             
           </tr>
@@ -219,13 +219,17 @@
                         Diagnóstico:<input type="text" name="Diagnostico" ng-model="VisitData.diagnosis" class="form-control" required />
                       </div>
                       </td>
+                      
+                  
 
                   </tr>
                   
                 </table>
                   
-                <a class="btn btn-success" ng-click="createNewVisit();" href="#">
+                <a class="btn btn-success" ng-click="createNewVisit();" ng-show="editing==0"href="#">
                   <i class="fa fa-check-circle fa-lg"></i> Crear</a>
+                <a class="btn btn-success" ng-click="editVisit();" ng-show="editing==1" href="#">
+                    <i class="fa fa-check-circle fa-lg"></i> Editar</a>
                 <a class="btn btn-danger" ng-click="cancelNewVisit();" href="#">
                    <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
       
@@ -235,30 +239,39 @@
 
 
         <table class="table table-bordered">
-          <tr ng-repeat="visitas in visits">
+          <tr ng-repeat="visit in visits">
             <td>
-              {{visitas.VISITA_ID}}
+              {{visit.VISITA_ID}}
               </td>
               
               <td>
-              {{visitas.FECHA_VIS}}
+              {{visit.FECHA_VIS}}
               </td>
               <td>
-              {{visitas.PAC_ID}}
+              {{visit.PAC_ID}}
+              </td>
+              
+              <td>{{ 'nombre del patiente:   ' + getPatientById(visit.PAC_ID).NOMBRE }}</td>
+            
+            
+              <td>
+              {{visit.MED_ID}}
               </td>
               <td>
-              {{visitas.MED_ID}}
-              </td>
-              <td>
-              {{visitas.DIAGNOSTICO}}
+              {{visit.DIAGNOSTICO}}
               </td>
               <td
-              <span class="fa-stack fa-lg" ng-click="deleteVisit(visitas.VISITA_ID);">
+              <span class="fa-stack fa-lg" ng-click="deleteVisit(visit.VISITA_ID);">
                   <i class="fa fa-circle fa-stack-2x text-danger">                                       
                 </i>
                   <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                </span>
               </td>
+              <td>
+                <span class="fa-stack fa-lg" ng-click="selectedVisit(visit);">
+                 <i class="fa fa-circle fa-stack-2x text-success"></i>
+                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                </span>
           </tr>
         </table>    
        </uib-tab>
