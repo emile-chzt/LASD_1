@@ -7,6 +7,10 @@ MyApp.controller("mainController", function ($scope, Management) {
   $scope.newPatient = 0;
   $scope.newDoctor = 0;
   $scope.newVisit = 0;
+  $scope.editPatId;
+  $scope.editDocId;
+  $scope.editing=0;
+  
 
   $scope.PatientData = {
     patientName: "",
@@ -227,4 +231,64 @@ MyApp.controller("mainController", function ($scope, Management) {
           $scope.patients=data;
         });
   };
+
+  $scope.selectedPatient=function(patient){
+ 
+    var date=new Date(patient.FECHA_NAC); 
+      $scope.PatientData.patientName=patient.NOMBRE;
+      $scope.PatientData.patientBirthdate=date;
+      $scope.PatientData.patientAddress=patient.DIRECCION;
+      $scope.PatientData.patientPhone=parseInt(patient.TELEFONO);
+      $scope.editPatId=patient.PAC_ID;
+      
+      $scope.editing=1;
+      $scope.newPatient=1;
+      
+  }
+
+  $scope.selectedDoctor=function(doctor){
+ 
+      $scope.DoctorData.doctorName=doctor.MED_NOMBRE;
+      $scope.DoctorData.doctorSpecialty=doctor.SERVICIO;
+      $scope.editDocId=doctor.MED_ID;
+      $scope.editing=1;
+      $scope.newDoctor=1;
+      
+    }
+
+
+  $scope.editPatient=function(){
+
+    var updatePatientData={
+      NOMBRE:$scope.PatientData.patientName,
+      FECHA_NAC:$scope.PatientData.patientBirthdate,
+      DIRECCION:$scope.PatientData.patientAddress,
+      TELEFONO:$scope.PatientData.patientPhone
+    }
+
+  Management.editPat($scope.editPatId,updatePatientData).success(function(data) {
+
+        $scope.patients=data;
+        $scope.editing=0;
+        $scope.newPatient=0;
+    });
+}
+
+$scope.editDoctor=function(){
+
+  var updateDoctorData={
+    MED_NOMBRE:$scope.DoctorData.doctorName,
+    SERVICIO:$scope.DoctorData.doctorSpecialty
+  }
+
+Management.editPat($scope.editDocId,updateDoctorData).success(function(data) {
+
+      $scope.doctor=data;
+      $scope.editing=0;
+      $scope.newDoctor=0;
+  });
+}
+
+  
+  
 });

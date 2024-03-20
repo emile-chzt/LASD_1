@@ -39,6 +39,18 @@ angular
     managementFactory.deleteVisit = function (id) {
       return $http.delete("/api/visits/" + id);
     };
+
+    // update a patient
+    managementFactory.editPat = function(id, Data) {
+      return $http.put('/api/patients/' + id, Data);
+    };
+    // update a doctor
+	managementFactory.editDoc = function(id, Data) {
+		return $http.put('/api/doctors/' + id, Data);
+	};
+
+
+    
     // return our entire userFactory object
     return managementFactory;
   });

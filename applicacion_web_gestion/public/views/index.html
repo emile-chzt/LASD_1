@@ -67,8 +67,10 @@
               </td>
             </tr>      
           </table> 
-          <a class="btn btn-success" ng-click="createNewPatient();" href="#">
+          <a class="btn btn-success" ng-click="createNewPatient();"ng-show="editing==0" href="#">
             <i class="fa fa-check-circle fa-lg"></i> Crear</a>
+            <a class="btn btn-success"  ng-click="editPatient();" ng-show="editing==1" href="#">
+              <i class="fa fa-check-circle fa-lg"></i> Editar</a> 
           <a class="btn btn-danger" ng-click="cancelNewPatient();" href="#">
              <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
 
@@ -98,7 +100,14 @@
                   </i>
                   <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                </span>
-              </td>                  
+              </td>     
+              <td>
+                <span class="fa-stack fa-lg" ng-click="selectedPatient(patient);">
+                 <i class="fa fa-circle fa-stack-2x text-success"></i>
+                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                </span>
+              </td>
+             
 
   
           </tr>
@@ -136,8 +145,11 @@
               </tr>
             </table>
           
-          <a class="btn btn-success" ng-click="createNewDoctor();" href="#">
+          <a class="btn btn-success" ng-click="createNewDoctor();" ng-show="editing==0" href="#">
             <i class="fa fa-check-circle fa-lg"></i> Crear</a>
+            <a class="btn btn-success"  ng-click="editDoctor();" ng-show="editing==1" href="#">
+              <i class="fa fa-check-circle fa-lg"></i> Editar</a>
+ 
           <a class="btn btn-danger" ng-click="cancelNewDoctor();" href="#">
              <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
 
@@ -161,6 +173,13 @@
                   </i>
                   <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                </span>
+               <td>
+                <span class="fa-stack fa-lg" ng-click="selectedDoctor(medicos);">
+                 <i class="fa fa-circle fa-stack-2x text-success"></i>
+                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                </span>
+              </td>
+
               
             
           </tr>
