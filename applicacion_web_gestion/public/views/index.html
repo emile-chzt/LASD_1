@@ -1,136 +1,120 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
- <head>
-	<meta charset="UTF-8">
-
-
-	<title>App Gestión </title>
-
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/Core/bootstrap.min.css">
-  <link rel="stylesheet" href="css/Core/font-awesome.css">
-  <link rel="stylesheet" href="css/Core/font-awesome.min.css">
-  <link rel="stylesheet" href="css/Core/normalize.css">
-
-  <!-- JS -->
-  <!-- load angular and our custom application -->   
-  <script src="js/Core/angular.min.js"></script>
-  <script src="js/Core/ui-bootstrap-tpls-0.14.3.min.js"></script>
-
-  <script src="js/Dev/app.js"></script>
-  <script src="js/Dev/Services/management.js"></script>
-    
+<head>
+    <meta charset="UTF-8">
+    <title>App Gestión</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/Core/font-awesome.css">
+    <link rel="stylesheet" href="css/Core/normalize.css">
+    <link rel="stylesheet" href="css/Core/style.css">
+    <!-- JS -->
+    <!-- load angular and our custom application -->
+    <script src="js/Core/angular.min.js"></script>
+    <script src="js/Core/ui-bootstrap-tpls-0.14.3.min.js"></script>
+    <script src="js/Dev/app.js"></script>
+    <script src="js/Dev/Services/management.js"></script>
 </head>
- 
-<!-- declare our angular application and angular controller -->
 <body ng-app="LabApp" ng-controller="mainController">
-  <h1>Gestión de Usuarios</h1>  
-  <form name="outerForm" class="tab-form-demo">
-
-    <uib-tabset active="activeForm">
-
-       <uib-tab index="0" heading="Pacientes">
-        <div ng-show="newPatient==0" ng-click="addNewPatient();"href="#">
-          <a class="btn btn-success" href="#" >
-          <i class="fa fa-plus">
-            </i>add patient
-          </a> 
-          {{newPatient}}
-        </div>
-        
-        <div ng-show="newPatient==1" >
+    <h1>Gestión de Usuarios</h1>  
+    <form name="outerForm" class="tab-form-demo">
+        <uib-tabset active="activeForm" class="text-center">
+            <uib-tab index="0" heading="Pacientes">
+              <br>
+                <button ng-click="addNewPatient()" class="btn btn-add-patient">
+                    <i class="fa fa-plus"></i> AÑADIR PACIENTE
+                </button>
+                <div ng-show="newPatient==1">
+            
           
-        <form name="miFormulario" novalidate >
-          <table>
-            <tr>
-              <td>
-                <div  class="form-group">
-                  Nombre:<input type="text" name="Name" ng-model="PatientData.patientName" class="form-control" placeholder="Nombre" required />
-                </div>
-              </td>
-              <td>
-                <div  class="form-group">
-                  Dirección:<input type="text" name="Address" ng-model="PatientData.patientAddress" class="form-control" required />
-                </div>
-              </td>
-              <td>
-                <div  class="form-group">
-                  Teléfono:<input type="number" name="Phone" ng-model="PatientData.patientPhone" class="form-control" required />
-                </div>
-              </td>
-              <td>
-                <div  class="form-group">
-                  Fecha de Nacimiento:<input type="date" ng-model="PatientData.patientBirthdate" name="" class="form-control" required />
-                </div>
-              </td>
-            </tr>      
-          </table> 
-          <a class="btn btn-success" ng-click="createNewPatient();" ng-show="editing==0" href="#">
-            <i class="fa fa-check-circle fa-lg"></i> Crear</a>
-          <a class="btn btn-success"  ng-click="editPatient();" ng-show="editing==1" href="#">
-              <i class="fa fa-check-circle fa-lg"></i> Editar</a>
- 
-          <a class="btn btn-danger" ng-click="cancelNewPatient();" href="#">
-             <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
-
-        </div>
-    </form>
-        
+            <form name="miFormulario" novalidate >
+              <table>
+                <tr>
+                  <td>
+                    <div  class="form-group">
+                      Nombre:<input type="text" name="Name" ng-model="PatientData.patientName" class="form-control" placeholder="Nombre" required />
+                    </div>
+                  </td>
+                  <td>
+                    <div  class="form-group">
+                      Dirección:<input type="text" name="Address" ng-model="PatientData.patientAddress" class="form-control" required />
+                    </div>
+                  </td>
+                  <td>
+                    <div  class="form-group">
+                      Teléfono:<input type="number" name="Phone" ng-model="PatientData.patientPhone" class="form-control" required />
+                    </div>
+                  </td>
+                  <td>
+                    <div  class="form-group">
+                      Fecha de Nacimiento:<input type="date" ng-model="PatientData.patientBirthdate" name="" class="form-control" required />
+                    </div>
+                  </td>
+                </tr>      
+              </table> 
+              <a class="btn btn-success" ng-click="createNewPatient();" ng-show="editing==0" href="#">
+                <i class="fa fa-check-circle fa-lg"></i> Crear</a>
+              <a class="btn btn-success"  ng-click="editPatient();" ng-show="editing==1" href="#">
+                  <i class="fa fa-check-circle fa-lg"></i> Editar</a>
+     
+              <a class="btn btn-danger" ng-click="cancelNewPatient();" href="#">
+                 <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
+    
+            </div>
+        </form>
+      </div>        
+      <br>
         <table class="table table-bordered">
-          <tr ng-repeat="patient in patients">
-            <td>
-              {{patient.NOMBRE}}
-              </td>
+          <br>
+            <thead>
+              <tr>
+                <th>NOMBRE DEL PACIENTE</th>
+                <th>FECHA DE NACIMIENTO</th>
+                <th>DIRECCION</th>
+                <th>TELÉFONO</th>
+                <th colspan="2">ELIMINAR O MODIFICAR</thcolspan>
+              </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="patient in patients">
               <td>
-              {{patient.FECHA_NAC}}
-              </td>
-              <td>
-              {{patient.DIRECCION}}
-              </td>
-              <td>
-              {{patient.TELEFONO}}
-              </td>
-              <td>
-                <span class="fa-stack fa-lg" ng-click="deletePatient(patient.PAC_ID);">
-                  <i class="fa fa-circle fa-stack-2x text-danger">
+                {{patient.NOMBRE}}
+                </td>
+                <td>
+                {{patient.FECHA_NAC}}
+                </td>
+                <td>
+                {{patient.DIRECCION}}
+                </td>
+                <td>
+                {{patient.TELEFONO}}
+                </td>
+                <td>
+                  <span class="fa-stack fa-lg" ng-click="deletePatient(patient.PAC_ID);">
+                    <i class="fa fa-circle fa-stack-2x text-danger"></i>
                     
-                    {{patient.PAC_ID}}
-                    
-                  </i>
-                  <i class="fa fa-times fa-stack-1x fa-inverse"></i>
-               </span>
-               <td>
-                <span class="fa-stack fa-lg" ng-click="selectedPatient(patient);">
-                 <i class="fa fa-circle fa-stack-2x text-success"></i>
-                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                </span>
-              </td>
-
-              </td>                  
-
+                    <i class="fa fa-times fa-stack-1x fa-inverse"></i>
+                 </span>
+                 <td>
+                  <span class="fa-stack fa-lg" ng-click="selectedPatient(patient);">
+                   <i class="fa fa-circle fa-stack-2x text-success"></i>
+                   <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                  </span>
+                </td>
   
-          </tr>
-          
-        </table>
-        
-        
-        
-   
-
-       </uib-tab>
-       
-       <uib-tab index="1" heading="Médicos">
-        <div ng-show="newDoctor==0" ng-click="addNewDoctor();"href="#">
-          <a class="btn btn-success" href="#" >
-          <i class="fa fa-plus">
-            </i>
-            add doctor
-          </a>
-        </div>
-        <div ng-show="newDoctor==1" >
-          <form name="doctorForm" novalidate></form>
+                </td>                  
+  
+    
+            </tr>
+          </tbody>
+          </table>
+            </uib-tab>
+            <uib-tab index="1" heading="Médicos">
+              <br>
+                <button ng-click="addNewDoctor()" class="btn btn-add-patient">
+                    <i class="fa fa-plus"></i> AÑADIR MÉDICO
+                </button>
+                <div ng-show="newDoctor==1">
+                    <form name="doctorForm" novalidate></form>
             <table>
               <tr>
                 <td>
@@ -155,130 +139,140 @@
 
         </div>
       </form>
-
-        <table class="table table-bordered">
-          <tr ng-repeat="medicos in doctors">
-            <td>
-              {{medicos.MED_NOMBRE}}
-              </td>
-              <td>
-              {{medicos.SERVICIO}}
-              </td>
-              <td>
-                <span class="fa-stack fa-lg" ng-click="deleteDoctor(medicos.MED_ID);">
-                  <i class="fa fa-circle fa-stack-2x text-danger">
-                    
-                    {{medicos.MED_ID}}
-                    
-                  </i>
-                  <i class="fa fa-times fa-stack-1x fa-inverse"></i>
-               </span>
-               </td>
-                <td>
-                  <span class="fa-stack fa-lg" ng-click="selectedDoctor(medicos);">
-                  <i class="fa fa-circle fa-stack-2x text-success"></i>
-                  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                  </span>
-                </td>
-              
-            
+    </div>  
+    <br>        
+      <table class="table table-bordered">
+        <br>
+        <thead>
+          <tr>
+            <th>NOMBRE DEL MEDICO</th>
+            <th>SERVICIO</th>
+            <th colspan="2">ELIMINAR O MODIFICAR</thcolspan>
+          
           </tr>
-        </table>     
-
-       </uib-tab>
-       <uib-tab index="2" heading="Visitas">
-        <div ng-show="newVisit==0" ng-click="displayer_Visits();"href="#">
-          <a class="btn btn-success" href="#" >
-          <i class="fa fa-plus">
-            </i>
-            Register a visit
-          </a>
-        </div>
-        <div ng-show="newVisit==1" >
-            <form name="miFormulario" novalidate >
-               <table>
-                 <tr>
-                   <td>
-                     <div  class="form-group">
-                      Paciente:<select name="Name" ng-model="VisitData.patientName" class="form-control" ng-options="opt.name for opt in patientList.Patients" required />
-                      </div>
-                   </td>
-                   <td>
-                     <div  class="form-group">
-                      Medico:<select type="text" name="Doctor" ng-model="VisitData.doctorName" class="form-control" ng-options="opt.name for opt in doctorList.Doctors" required />
-                     </div>
-                   </td>
-                    <td>
-                      
-                   <div  class="form-group">
-                    Fecha de la visita:<input type="date" ng-model="VisitData.visitDate" name="" class="form-control" required />
-                  </div>
-                  </td>
-                   <td>
-                      <div  class="form-group">
-                        Diagnóstico:<input type="text" name="Diagnostico" ng-model="VisitData.diagnosis" class="form-control" required />
-                      </div>
-                      </td>
-                      
-                  
-
-                  </tr>
-                  
-                </table>
-                  
-                <a class="btn btn-success" ng-click="createNewVisit();" ng-show="editing==0"href="#">
-                  <i class="fa fa-check-circle fa-lg"></i> Crear</a>
-                <a class="btn btn-success" ng-click="editVisit();" ng-show="editing==1" href="#">
-                    <i class="fa fa-check-circle fa-lg"></i> Editar</a>
-                <a class="btn btn-danger" ng-click="cancelNewVisit();" href="#">
-                   <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
-      
-            </form>
-
-        </div>
-
-
-        <table class="table table-bordered">
-          <tr ng-repeat="visit in visits">
+        </thead>
+        <tbody>
+        <tr ng-repeat="medicos in doctors">
+          <td>
+            {{medicos.MED_NOMBRE}}
+            </td>
             <td>
-              {{visit.VISITA_ID}}
-              </td>
-              
-              <td>
-              {{visit.FECHA_VIS}}
-              </td>
-              <td>
-              {{visit.PAC_ID}}
-              </td>
-              
-              <td>{{ 'nombre del patiente:   ' + getPatientById(visit.PAC_ID).NOMBRE }}</td>
-            
-            
-              <td>
-              {{visit.MED_ID}}
-              </td>
-              <td>
-              {{visit.DIAGNOSTICO}}
-              </td>
-              <td
-              <span class="fa-stack fa-lg" ng-click="deleteVisit(visit.VISITA_ID);">
-                  <i class="fa fa-circle fa-stack-2x text-danger">                                       
+            {{medicos.SERVICIO}}
+            </td>
+            <td>
+              <span class="fa-stack fa-lg" ng-click="deleteDoctor(medicos.MED_ID);">
+                <i class="fa fa-circle fa-stack-2x text-danger">
                 </i>
-                  <i class="fa fa-times fa-stack-1x fa-inverse"></i>
-               </span>
-              </td>
+                <i class="fa fa-times fa-stack-1x fa-inverse"></i>
+             </span>
+             </td>
               <td>
-                <span class="fa-stack fa-lg" ng-click="selectedVisit(visit);">
-                 <i class="fa fa-circle fa-stack-2x text-success"></i>
-                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                <span class="fa-stack fa-lg" ng-click="selectedDoctor(medicos);">
+                <i class="fa fa-circle fa-stack-2x text-success"></i>
+                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                 </span>
-          </tr>
-        </table>    
-       </uib-tab>
-    </uib-tabset>
-  </form>
+              </td>
+            
+          
+        </tr>
+      </tbody>
+      </table> 
+            </uib-tab>
+            <uib-tab index="2" heading="Visitas">
+              <br>
+                <button ng-click="addNewVisit()" class="btn btn-add-patient">
+                    <i class="fa fa-plus"></i> REGISTRAR UNA VISITA
+                </button>
+              
+                <div ng-show="newVisit==1">
+                
+                    <form name="miFormulario" novalidate >
+                        <table>
+                          <tr>
+                            <td>
+                              <div  class="form-group">
+                               Paciente:<select name="Name" ng-model="VisitData.patientName" class="form-control" ng-options="opt.name for opt in patientList.Patients" required />
+                               </div>
+                            </td>
+                            <td>
+                              <div  class="form-group">
+                               Medico:<select type="text" name="Doctor" ng-model="VisitData.doctorName" class="form-control" ng-options="opt.name for opt in doctorList.Doctors" required />
+                              </div>
+                            </td>
+                             <td>
+                               
+                            <div  class="form-group">
+                             Fecha de la visita:<input type="date" ng-model="VisitData.visitDate" name="" class="form-control" required />
+                           </div>
+                           </td>
+                            <td>
+                               <div  class="form-group">
+                                 Diagnóstico:<input type="text" name="Diagnostico" ng-model="VisitData.diagnosis" class="form-control" required />
+                               </div>
+                               </td>
+                               
+                           
+         
+                           </tr>
+                           
+                         </table>
+                           
+                         <a class="btn btn-success" ng-click="createNewVisit();" ng-show="editing==0"href="#">
+                           <i class="fa fa-check-circle fa-lg"></i> Crear</a>
+                         <a class="btn btn-success" ng-click="editVisit();" ng-show="editing==1" href="#">
+                             <i class="fa fa-check-circle fa-lg"></i> Editar</a>
+                         <a class="btn btn-danger" ng-click="cancelNewVisit();" href="#">
+                            <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
+               
+                     </form>
+         
+                </div>
+                <br>
 
- 
+                <table class="table table-bordered">
+                  <br>
+                    <thead>
+                      <tr>
+                        <th>ID DE VISITA</th>
+                        <th>FECHA DE LA VISITA</th>
+                        <th>NOMBRE DEL PACIENTE</th>
+                        <th>DIAGNOSTICO</th>
+                        <th colspan="2">ELIMINAR O MODIFICAR</thcolspan>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="visit in visits">
+                      <td>
+                        {{visit.VISITA_ID}}
+                        </td>
+                        
+                        <td>
+                        {{visit.FECHA_VIS}}
+                        </td>
+                        
+                        <td>{{getPatientById(visit.PAC_ID).NOMBRE }}</td>
+                        <td>
+                        {{visit.DIAGNOSTICO}}
+                        </td>
+                        <td>
+                        <span class="fa-stack fa-lg" ng-click="deleteVisit(visit.VISITA_ID);">
+                            <i class="fa fa-circle fa-stack-2x text-danger">                                       
+                          </i>
+                            <i class="fa fa-times fa-stack-1x fa-inverse"></i>
+                         </span>
+                        </td>
+                        <td>
+                          <span class="fa-stack fa-lg" ng-click="selectedVisit(visit);">
+                           <i class="fa fa-circle fa-stack-2x text-success"></i>
+                           <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                          </span>
+
+
+                    </tr>
+                  </tbody>
+                  </table>
+            </uib-tab>
+        </uib-tabset>
+    </form>
 </body>
-
 </html>
