@@ -33,7 +33,9 @@ MyApp.controller("mainController", function ($scope, Management) {
     Doctors: [],
   };
   $scope.editing = 0;
-
+  $scope.try_cancel = 0;
+  $scope.selectedPatientId = 2;
+  $scope.selectedDoctorId = 2;
   //functions
 
   Management.allPatients().success(function (data) {
@@ -123,6 +125,86 @@ MyApp.controller("mainController", function ($scope, Management) {
       $scope.newPatient = 0;
     });
   };
+  $scope.cancelDeletePatient = function () {
+    $scope.try_cancel = 0;
+  };
+  $scope.cancelNewPatient = function () {
+    $scope.newPatient = 0;
+
+    $scope.PatientData = {
+      patientName: "",
+      patientBirthdate: "",
+      patientAddress: "",
+      patientPhone: "",
+    };
+  };
+  $scope.deletePatient = function (id) {
+    Management.deletePat(id).success(function (data) {
+      $scope.patients = data;
+    });
+  };
+  $scope.filterPatVisits = function (id) {
+    $scope.filteredVisits = $scope.visits.filter(function (visit) {
+      return visit.PAC_ID === id;
+      console.log("filteredVisits:", $scope.filteredVisits.length);
+    });
+  };
+  $scope.TryDeletePatient = function (id) {
+    //filter visits
+    $scope.filterPatVisits(id);
+    //if there is no visits associated we delete it
+    if ($scope.filteredVisits.length == 0) {
+      $scope.try_cancel = 0;
+      Management.deletePat(id).success(function (data) {
+        $scope.patients = data;
+      });
+      console.log("Patient deleted:", id);
+    }
+    //else we display the visits associated
+    else {
+      $scope.try_cancel = 1;
+      $scope.selectedPatientId = id;
+
+      console.log("try_cancel:", $scope.try_cancel);
+      console.log("Displaying visits for patient with ID:", id);
+    }
+  };
+
+  $scope.displayerByPatientId = function (patientId) {
+    //scope.newVisit = 1;
+
+    // Clear previous patient and doctor lists
+    $scope.patientList.Patients = [];
+    $scope.doctorList.Doctors = [];
+
+    // Fetch visits associated with the given patient ID
+    Management.visitsByPatientId(patientId).success(function (data) {
+      $scope.visits = data; // Assuming visits are returned as an array of objects
+    });
+
+    // Fetch all patients
+    Management.allPatients().success(function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var dataPat = {
+          name: data[i].NOMBRE,
+          id: data[i].PAC_ID,
+        };
+        $scope.patientList.Patients.push(dataPat);
+      }
+    });
+
+    // Fetch all doctors
+    Management.allDoctors().success(function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var dataDoc = {
+          name: data[i].MED_NOMBRE,
+          id: data[i].MED_ID,
+        };
+        $scope.doctorList.Doctors.push(dataDoc);
+      }
+    });
+  };
+
   ///////////////////////////// now doctors
 
   $scope.createNewDoctor = function () {
@@ -169,7 +251,44 @@ MyApp.controller("mainController", function ($scope, Management) {
       $scope.newDoctor = 0;
     });
   };
+  $scope.getDoctorById = function (doctorId) {
+    // Find and return the doctor with the matching ID
+    return $scope.doctors.find(function (doctor) {
+      return doctor.MED_ID === doctorId; // Assuming 'id' is the property holding the doctor ID
+    });
+  };
+  $scope.deleteDoctor = function (id) {
+    Management.deleteDoc(id).success(function (data) {
+      $scope.doctors = data;
+    });
+  };
+  $scope.filteredVisits = [];
 
+  $scope.filterDocVisits = function (id) {
+    $scope.filteredVisits = $scope.visits.filter(function (visit) {
+      return visit.MED_ID === id;
+    });
+    console.log("filteredVisits:", $scope.filteredVisits.length);
+  };
+
+  $scope.TryDeleteDoctor = function (id) {
+    //filter visits
+    $scope.filterDocVisits(id);
+    //if there is no visits associated we delete it
+    if ($scope.filteredVisits.length == 0) {
+      $scope.try_cancel = 0;
+      Management.deleteDoc(id).success(function (data) {
+        $scope.doctors = data;
+      });
+      console.log("Doctor deleted:", id);
+    }
+    //else we display the visits associated
+    else {
+      $scope.try_cancel = 1;
+      $scope.selectedDoctorId = id;
+      console.log("Displaying visits for doctor with ID:", id);
+    }
+  };
   ///////////////////////////// now visits
 
   $scope.displayer_Visits = function () {
@@ -182,7 +301,6 @@ MyApp.controller("mainController", function ($scope, Management) {
           id: data[i].PAC_ID,
         };
         $scope.patientList.Patients.push(dataPat);
-        s;
       }
     });
 
@@ -295,33 +413,15 @@ MyApp.controller("mainController", function ($scope, Management) {
       };
     });
   };
-
-  $scope.cancelNewPatient = function () {
-    $scope.newPatient = 0;
-    $scope.PatientData = {
-      patientName: "",
-      patientBirthdate: "",
-      patientAddress: "",
-      patientPhone: "",
-    };
+  $scope.cancelDeleteDoctor = function () {
+    $scope.try_cancel = 0;
   };
-  $scope.deletePatient = function (id) {
-    Management.deletePat(id).success(function (data) {
-      $scope.patients = data;
-    });
-  };
-
   $scope.cancelNewDoctor = function () {
     $scope.newDoctor = 0;
     $scope.DoctorData = {
       doctorName: "",
       doctorSpecialty: "",
     };
-  };
-  $scope.deleteDoctor = function (id) {
-    Management.deleteDoc(id).success(function (data) {
-      $scope.doctors = data;
-    });
   };
 
   $scope.cancelNewVisit = function () {
@@ -341,6 +441,7 @@ MyApp.controller("mainController", function ($scope, Management) {
     };
   };
   $scope.deleteVisit = function (id) {
+    console.log("deleteVisit id:", id);
     Management.deleteVisit(id).success(function (data) {
       $scope.visits = data;
     });
