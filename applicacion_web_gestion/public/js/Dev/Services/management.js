@@ -19,7 +19,6 @@ angular
 
     // add new patient
     managementFactory.addPatient = function (PatientData) {
-      alert("hola");
       return $http.post("/api/patients/", PatientData);
     };
     // add new doctor
