@@ -7,6 +7,10 @@ MyApp.controller("mainController", function ($scope, Management) {
   $scope.newPatient = 0;
   $scope.newDoctor = 0;
   $scope.newVisit = 0;
+  $scope.editPatId;
+  $scope.editDocId;
+  $scope.editing=0;
+  
 
   $scope.PatientData = {
     patientName: "",

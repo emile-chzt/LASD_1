@@ -1,49 +1,30 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
- <head>
-	<meta charset="UTF-8">
-
-
-	<title>App Gestión </title>
-
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/Core/bootstrap.min.css">
-  <link rel="stylesheet" href="css/Core/font-awesome.css">
-  <link rel="stylesheet" href="css/Core/font-awesome.min.css">
-  <link rel="stylesheet" href="css/Core/normalize.css">
-
-  <!-- JS -->
-  <!-- load angular and our custom application -->   
-  <script src="js/Core/angular.min.js"></script>
-  <script src="js/Core/ui-bootstrap-tpls-0.14.3.min.js"></script>
-
-  <script src="js/Dev/app.js"></script>
-  <script src="js/Dev/Services/management.js"></script>
-    
+<head>
+    <meta charset="UTF-8">
+    <title>App Gestión</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/Core/font-awesome.css">
+    <link rel="stylesheet" href="css/Core/normalize.css">
+    <link rel="stylesheet" href="css/Core/style.css">
+    <!-- JS -->
+    <!-- load angular and our custom application -->
+    <script src="js/Core/angular.min.js"></script>
+    <script src="js/Core/ui-bootstrap-tpls-0.14.3.min.js"></script>
+    <script src="js/Dev/app.js"></script>
+    <script src="js/Dev/Services/management.js"></script>
 </head>
- 
-<!-- declare our angular application and angular controller -->
 <body ng-app="LabApp" ng-controller="mainController">
-  <h1>Gestión de Usuarios</h1>  
-  <form name="outerForm" class="tab-form-demo">
-
-    <uib-tabset active="activeForm">
-
-       <uib-tab index="0" heading="Pacientes">
-        <div ng-show="newPatient==0" ng-click="addNewPatient();"href="#">
-          <a class="btn btn-success" href="#" >
-          <i class="fa fa-plus">
-            </i>add patient
-          </a> 
-          {{newPatient}}
-        </div>
-        
-        <div ng-show="newPatient==1" >
-          <div>
-            Creating patient menu:
-          </div>
+    <h1>Gestión de Usuarios</h1>  
+    <form name="outerForm" class="tab-form-demo">
+        <uib-tabset active="activeForm" class="text-center">
+            <uib-tab index="0" heading="Pacientes">
+              <br>
+                <button ng-click="addNewPatient()" class="btn btn-add-patient">
+                    <i class="fa fa-plus"></i> AÑADIR PACIENTE
+                </button>
+                <div ng-show="newPatient==1">
+            
           
         <form name="miFormulario" novalidate >
           <table>
@@ -138,6 +119,7 @@
           
       
         <table class="table table-bordered">
+          <br>
           <thead>
             <tr>
                 <th>Patient ID</th>
@@ -226,72 +208,11 @@
              <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
 
         </div>
-        <div ng-show="try_cancel==1" >
-          <div>
-            You can't delete this doctor because it has following visits:
-          </div>
-          <table class="table table-bordered" >
-            <thead>
-              <tr>
-                  <th>Visit ID</th>
-                  <th>Date</th>
-                  <th>Patient ID</th>
-                  <th>Patient Name</th>
-                  <th>Doctor ID</th>
-                  <th>Doctor Name</th>
-                  <th>Diagnosis</th>
-                  <th>Delete</th>
-                  
-              </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="visit in visits | filter: { MED_ID: selectedDoctorId } : true ">
-                <td>
-                    {{ visit.VISITA_ID }}
-                </td>
-                <td>
-                    {{ visit.FECHA_VIS }} 
-                </td>
-                <td>
-                    {{ visit.PAC_ID }}
-                </td>
-                <td>{{  getPatientById(visit.PAC_ID).NOMBRE }}</td>
-                <td>
-                    {{ visit.MED_ID }}
-                </td>
-                <td>{{ getDoctorById(visit.MED_ID).MED_NOMBRE}}</td>
-                <td>
-                    {{ visit.DIAGNOSTICO }}
-                </td>
-                <td>
-                    <span class="fa-stack fa-lg" ng-click="deleteVisit(visit.VISITA_ID);">
-                        <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                        <i class="fa fa-times fa-stack-1x fa-inverse"></i>
-                    </span>
-                </td>
-                
-            </tr>
-          </tbody>
-        </table>
-        <a class="btn btn-danger" ng-click="cancelDeleteDoctor();" href="#">
-          <i class="fa fa-times-circle fa-lg"></i> Cancel suppresion</a>
-        </div>
+      <br>
+      </form>
 
         <table class="table table-bordered">
-          <thead>
-            <tr>
-                <th>Doctor ID</th>
-                <th>Doctor Name</th>
-                <th>Specialty</th>
-                <th>Delete</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
           <tr ng-repeat="medicos in doctors">
-            <td>
-              {{medicos.MED_ID}}
-            </td>
             <td>
               {{medicos.MED_NOMBRE}}
               </td>
@@ -299,8 +220,10 @@
               {{medicos.SERVICIO}}
               </td>
               <td>
-                <span class="fa-stack fa-lg" ng-click="TryDeleteDoctor(medicos.MED_ID);">
-                  <i class="fa fa-circle fa-stack-2x text-danger">                 
+                <span class="fa-stack fa-lg" ng-click="deleteDoctor(medicos.MED_ID);">
+                  <i class="fa fa-circle fa-stack-2x text-danger">
+                    
+                    {{medicos.MED_ID}}
                     
                   </i>
                   <i class="fa fa-times fa-stack-1x fa-inverse"></i>
@@ -315,7 +238,6 @@
               
             
           </tr>
-          </tbody>
         </table>     
 
        </uib-tab>
@@ -330,6 +252,7 @@
         <div ng-show="newVisit==1" >
             <form name="miFormulario" novalidate >
                <table>
+                
                  <tr>
                    <td>
                      <div  class="form-group">
@@ -367,7 +290,8 @@
                    <i class="fa fa-times-circle fa-lg"></i> Cancelar</a>
       
             </form>
-
+            </div>
+            </br>
         </div>
 
 
@@ -425,5 +349,4 @@
 
  
 </body>
-
 </html>
